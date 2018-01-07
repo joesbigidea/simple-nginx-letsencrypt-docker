@@ -1,0 +1,22 @@
+version: "3.4"
+services:
+  proxy:
+    build: ./nginx-proxy
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+        CERTBOT_EMAIL: cleveremail@cleverdomain.cats
+        CERTBOT_DOMAIN: cleverdomain.cats
+        PROD: "false"
+    networks:
+      - proxy-net
+    volumes:
+      - "./nginx-conf.d/:/etc/nginx/conf.d/"
+      - "./proxy/letsencrypt/:/etc/letsencrypt"
+  example-service:
+    build: ./example-service
+    networks:
+      - proxy-net
+networks:
+  proxy-net:

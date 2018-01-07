@@ -30,7 +30,7 @@ trap "kill 0" EXIT
 nginx -g "daemon off;" &
 export NGINX_PID=$!
 
-# Next, run certbot to request all the ssl certs we can find
+#If the cert isn't out there yet, call certbot for it
 if [ ! -f "/etc/letsencrypt/live/$CERTBOT_DOMAIN/fullchain.pem" ]; then
   call_certbot
 fi
